@@ -31,6 +31,7 @@ NexusPHP站点之间转种的脚本，可以相对的方便的进行种子转发
 | MTEAM | ✔ | ✔ |
 | TJUPT | ✔ | × |
 | LemonHD | ✔ | × |
+| KeepFrds | ✔ | ✔ |
 | HaiDan  | × | ✔|
 
 ## 使用方式
