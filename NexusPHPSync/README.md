@@ -33,6 +33,7 @@ NexusPHP站点之间转种的脚本，可以相对的方便的进行种子转发
 | LemonHD | ✔ | × |
 | KeepFrds | ✔ | ✔ |
 | HaiDan  | × | ✔|
+| HDai  | × | ✔|
 
 ## 使用方式
 同原PT搬运助手

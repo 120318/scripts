@@ -20,6 +20,7 @@
 // @include         http*://pt.m-team.cc/details.php*
 // @include         http*://tjupt.org/details.php*
 
+// @include         http*://hd.ai/Torrents.upload*
 // @include         http*://chdbits.co/upload.php*
 // @include         http*://www.haidan.video/upload.php*
 // @include         http*://pthome.net/upload.php*
@@ -43,13 +44,14 @@ const SiteName = {
     MTEAM: "pt.m-team.cc",
     TJUPT: "tjupt.org",
     LEMONHD: "lemonhd.org",
+    HDAI: "www.hd.ai"
 }
 
 const SupportForwardedSite = [
     SiteName.CHD, SiteName.FRDS, SiteName.BEITAI, SiteName.HDSKY, SiteName.HD4FUN, SiteName.OURBITS, SiteName.PTHOME, SiteName.SSD, SiteName.PTERCLUB, SiteName.MTEAM, SiteName.TJUPT, SiteName.LEMONHD,
 ]
 const SupportUploadSite = [
-    SiteName.CHD, SiteName.HAIDAN, SiteName.PTHOME, SiteName.SSD, SiteName.PTERCLUB, SiteName.MTEAM,
+    SiteName.CHD, SiteName.HAIDAN, SiteName.PTHOME, SiteName.SSD, SiteName.PTERCLUB, SiteName.MTEAM, SiteName.HDAI,
 ]
 
 const Type = { Movie: "movie", TVSeries: "series", TVShow: "show", Doc: "doc", Anim: "anim", Other: "other" }
@@ -62,6 +64,8 @@ function get_upload_page(site_name) {
     switch (site_name) {
         case SiteName.SSD:
             return "upload.new.php"
+        case SiteName.HDAI:
+            return "Torrents.upload"
         default:
             return "upload.php"
     }
@@ -393,7 +397,7 @@ class NexusPHPSite {
     }
 
     _get_type_meta() {
-        return { "纪录片": Type.Doc, "综艺": Type.Show, "动漫": Type.Anim, "电视剧": Type.TVSeries, "TV-Pack": Type.TVSeries, "TV-Show": Type.TVShow, "TV-Episode": Type.TVSeries, "Movies": Type.Movie, "TV Series": Type.TVSeries, "电影": Type.Movie, "Animations": Type.Anim, "TV Shows": Type.TVShow, "Documentaries": Type.Doc }
+        return { "纪录片": Type.Doc, "综艺": Type.TVShow, "动漫": Type.Anim, "电视剧": Type.TVSeries, "TV-Pack": Type.TVSeries, "TV-Show": Type.TVShow, "TV-Episode": Type.TVSeries, "Movies": Type.Movie, "TV Series": Type.TVSeries, "电影": Type.Movie, "Animations": Type.Anim, "TV Shows": Type.TVShow, "Documentaries": Type.Doc }
     }
     _get_source_meta() {
         return { "UltraHD(4K)": Source.UHDBluray, "DVD(原盘)": Source.DVD, "Blu-ray(原盘)": Source.Bluray, "UHD Blu-ray/DIY": Source.UHDBluray, "Blu-ray/DIY": Source.Bluray, "WEB-DL": Source.WebDL, "HDTV": Source.HDTV, "Remux": Source.Remux, "HD DVD": Source.DVD, "Encode": Source.Encode, "Blu-ray": Source.Bluray, "UHD Blu-ray": Source.UHDBluray }
@@ -642,6 +646,18 @@ class TJUPTSite extends NexusPHPSite {
     }
 }
 
+class HDaiSite extends NexusPHPSite {
+    fill_type(torrent) {
+        var data = torrent.type;
+        var type = document.getElementsByTagName('select')[0]
+        var sel = Array.from(type.options).find((e) => { return this._get_type_meta()[e.text] == data })
+        sel.selected = true
+    }
+    _get_type_meta() {
+        return { "电影Movies": Type.Movie, "电视剧TV Series": Type.TVSeries, "综艺TV Shows": Type.TVShow, "纪录片Documentaries": Type.Doc, "动漫Animations": Type.Anim}
+    }
+}
+
 class MTeamSite extends NexusPHPSite {
     _get_type_tag() {
         return "類別";
@@ -758,6 +774,8 @@ function get_site() {
             return new LemonHDSite(site_name);
         case SiteName.TJUPT:
             return new TJUPTSite(site_name);
+        case SiteName.HDAI:
+            return new HDaiSite(site_name)
         default:
             return new NexusPHPSite(site_name);
     }
