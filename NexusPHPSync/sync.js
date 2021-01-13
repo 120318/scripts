@@ -20,7 +20,7 @@
 // @include         http*://pt.m-team.cc/details.php*
 // @include         http*://tjupt.org/details.php*
 
-// @include         http*://hd.ai/Torrents.upload*
+// @include         http*://www.hd.ai/Torrents.upload*
 // @include         http*://chdbits.co/upload.php*
 // @include         http*://www.haidan.video/upload.php*
 // @include         http*://pthome.net/upload.php*
